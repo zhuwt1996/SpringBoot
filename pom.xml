@@ -12,6 +12,8 @@
         <module>springboot-web</module>
         <module>springboot-redis</module>
         <module>springboot-thymeleaf</module>
+        <module>springboot-jpa</module>
+        <module>springboot-mybatis</module>
     </modules>
 
     <build>
