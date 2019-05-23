@@ -16,6 +16,7 @@
         <module>springboot-mybatis</module>
         <module>springboot-schedule</module>
         <module>springboot-rabbitmq</module>
+        <module>springboot-cache</module>
     </modules>
 
     <build>
