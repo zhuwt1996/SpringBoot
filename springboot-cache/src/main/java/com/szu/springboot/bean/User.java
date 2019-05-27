@@ -1,11 +1,15 @@
 package com.szu.springboot.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by zhuwutao on 2019/5/22
  */
-public class User {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Long id;
+
+    private Integer id;
+
     private String userName;
     private String passWord;
     private String nickName;
@@ -20,11 +24,11 @@ public class User {
         this.userName = userName;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

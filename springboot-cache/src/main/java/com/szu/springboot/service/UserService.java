@@ -20,14 +20,14 @@ public class UserService {
     RedisCacheManager userRedisCacheManager;
 
     @Cacheable(value = {"user"})
-    public User getUserById(Long id){
+    public User getUserById(Integer id){
         System.out.println("查询id为"+ id +"的用户");
         User user = userMapper.findUser(id);
 
         return user;
     }
 
-    @Cacheable(value = {"user"},key = "#result.id")
+    @Cacheable(cacheNames = "user")
     public User updateUser(User user){
         System.out.println("更新用户为："+user);
         userMapper.updateUser(user);

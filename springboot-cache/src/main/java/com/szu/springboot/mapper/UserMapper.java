@@ -12,7 +12,7 @@ public interface UserMapper {
     List<User> findAllUers();
 
     @Select("select * from user where id = #{id}")
-    User findUser(Long id);
+    User findUser(Integer id);
 
     @Insert("insert into user(userName,passWord) values(#{userName}, #{passWord}) ")
     void insertUser(User user);
@@ -21,5 +21,5 @@ public interface UserMapper {
     void updateUser(User user);
 
     @Delete("DELETE FROM user WHERE id =#{id}")
-    void  deleteUser(Long id);
+    void  deleteUser(Integer id);
 }

@@ -15,12 +15,13 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/get/{id}")
-    public User getUser(@PathVariable("id") Long id){
+    public User getUser(@PathVariable("id") Integer id){
         return userService.getUserById(id);
     }
 
-    @PostMapping("/user")
+    @GetMapping("/user")
     public User updateUser(User user){
+        System.out.println(user);
         return userService.updateUser(user);
     }
 
