@@ -4,8 +4,10 @@ import com.szu.springboot.bean.User;
 import com.szu.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 
@@ -63,10 +65,21 @@ public class UserService {
      *      sync：是否使用异步模式
      *
      */
-    @Cacheable(value = {"user"})
+//    @Cacheable(value = {"user"})
+//    public User getUserById(Integer id){
+//        System.out.println("查询id为"+ id +"的用户");
+//        User user = userMapper.findUser(id);
+//
+//        return user;
+//    }
+
+    // 使用缓存管理器得到缓存，进行api调用
     public User getUserById(Integer id){
         System.out.println("查询id为"+ id +"的用户");
         User user = userMapper.findUser(id);
+
+        Cache cache = userRedisCacheManager.getCache("user");
+        cache.put("dept:1",user);
 
         return user;
     }
@@ -101,6 +114,39 @@ public class UserService {
         userMapper.updateUser(user);
 
         return user;
+    }
+
+    /**
+     * @CacheEvict：缓存清除
+     *  key：指定要清除的数据
+     *  allEntries = true：指定清除这个缓存中所有的数据
+     *  beforeInvocation = false：缓存的清除是否在方法之前执行
+     *      默认代表缓存清除操作是在方法执行之后执行;如果出现异常缓存就不会清除
+     *
+     *  beforeInvocation = true：
+     *      代表清除缓存操作是在方法运行之前执行，无论方法是否出现异常，缓存都清除
+     *
+     *
+     */
+    @CacheEvict(value = "user",beforeInvocation = false)
+    public void deleteUser(Integer id){
+        System.out.println("删除id为"+ id + "的用户");
+//        userMapper.deleteUser(id);
+        int i=1/0;
+    }
+
+    // @Caching 定义复杂的缓存规则
+    @Caching(
+            cacheable = {
+                    @Cacheable(value={"user"})
+            }/*,
+            put = {
+                    @CachePut(*//*value="emp",*//*key = "#result.id"),
+                    @CachePut(*//*value="emp",*//*key = "#result.nickName")
+            }*/
+    )
+    public User getUserByUsername(String username){
+        return userMapper.getUserByUsername(username);
     }
 
 

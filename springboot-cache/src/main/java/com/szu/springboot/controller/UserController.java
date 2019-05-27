@@ -25,4 +25,15 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    @GetMapping("/delete")
+    public String deleteUser(Integer id){
+        userService.deleteUser(id);
+        return "success";
+    }
+
+    @GetMapping("/emp/username")
+    public User getEmpByLastName(String username){
+        return userService.getUserByUsername(username);
+    }
+
 }
