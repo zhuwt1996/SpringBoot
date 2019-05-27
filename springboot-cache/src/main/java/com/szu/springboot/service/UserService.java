@@ -79,7 +79,7 @@ public class UserService {
         User user = userMapper.findUser(id);
 
         Cache cache = userRedisCacheManager.getCache("user");
-        cache.put("dept:1",user);
+        cache.put("user:1",user);
 
         return user;
     }
